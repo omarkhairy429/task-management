@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Table(name = "tasks")
 
@@ -29,12 +29,12 @@ public class Task {
     private String name;
 
     @Builder.Default
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, columnDefinition = "varchar(255) default 'TODO'")
     @Enumerated(EnumType.STRING)
     private Status status = Status.TODO;
 
     @Builder.Default
-    @Column(name = "priority", nullable = false)
+    @Column(name = "priority", nullable = false, columnDefinition = "varchar(255) default 'MEDIUM'")
     @Enumerated(EnumType.STRING)
     private Priority priority = Priority.MEDIUM;
 

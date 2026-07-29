@@ -36,4 +36,16 @@ public class AuthController {
         }
 
     }
+
+    @PostMapping("/api/v1/auth/register")
+    public String register(@RequestBody User registerUser) {
+        User user = userRepository.save(registerUser);
+
+        if (user == null) {
+            return  "Invalid Data";
+        }
+        else {
+            return jwtService.generateToken(user.getUsername());
+        }
+    }
 }
