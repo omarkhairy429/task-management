@@ -1,3 +1,15 @@
 spring:
   application:
     name: task-management
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/task-management
+    username: postgres
+    password: omarqwer1
+    driverClassName: org.postgresql.Driver

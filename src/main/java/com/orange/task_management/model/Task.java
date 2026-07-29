@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "tasks")
 
 public class Task {
@@ -27,10 +28,12 @@ public class Task {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Builder.Default
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status = Status.TODO;
 
+    @Builder.Default
     @Column(name = "priority", nullable = false)
     @Enumerated(EnumType.STRING)
     private Priority priority = Priority.MEDIUM;
