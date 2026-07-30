@@ -1,5 +1,7 @@
 package com.orange.task_management.controller;
 
+import com.orange.task_management.enums.Priority;
+import com.orange.task_management.enums.Status;
 import com.orange.task_management.model.Task;
 import com.orange.task_management.model.User;
 import com.orange.task_management.repository.TaskRepository;
@@ -20,9 +22,25 @@ public class TaskController {
     }
 
     @GetMapping("/api/v1/tasks")
-    public List<Task> getAllTasks(Authentication auth) {
+    public List<Task> getAllTasks
+            (Authentication auth,
+             @RequestParam(required = false) Priority priority,
+             @RequestParam(required = false) Status status)
+
+    {
         System.out.println(auth.getName());
-        return taskRepository.findByUserUsername(auth.getName());
+        if (priority != null && status != null) {
+            return taskRepository.findByUserUsernameAndPriorityAndStatus(auth.getName(), priority, status);
+        }
+        else if (priority != null) {
+            return taskRepository.findByUserUsernameAndPriority(auth.getName(),priority);
+        }
+        else if (status != null) {
+            return taskRepository.findByUserUsernameAndStatus(auth.getName(), status);
+        }
+        else {
+            return taskRepository.findByUserUsername(auth.getName());
+        }
     }
 
     @PostMapping("/api/v1/tasks")
@@ -56,7 +74,6 @@ public class TaskController {
         }
         return task;
     }
-
 
 
 }

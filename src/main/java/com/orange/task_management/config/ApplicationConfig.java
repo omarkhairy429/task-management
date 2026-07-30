@@ -1,6 +1,6 @@
 package com.orange.task_management.config;
 
-import com.orange.task_management.model.User;
+
 import com.orange.task_management.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
