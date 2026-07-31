@@ -1,7 +1,10 @@
 package com.orange.task_management.controller;
 
+import com.orange.task_management.dto.UserLogin;
+import com.orange.task_management.dto.UserRequest;
 import com.orange.task_management.model.User;
 import com.orange.task_management.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,12 +18,12 @@ public class AuthController {
     }
 
     @PostMapping("/api/v1/auth/login")
-    public String login(@RequestBody User loginUser) {
+    public String login(@Valid @RequestBody UserLogin loginUser) {
         return authService.login(loginUser);
     }
 
     @PostMapping("/api/v1/auth/register")
-    public String register(@RequestBody User registerUser) {
+    public String register(@Valid @RequestBody UserRequest registerUser) {
         return authService.register(registerUser);
     }
 }

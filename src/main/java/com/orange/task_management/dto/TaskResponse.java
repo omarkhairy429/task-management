@@ -5,6 +5,7 @@ import com.orange.task_management.enums.Status;
 import com.orange.task_management.model.Task;
 
 public record TaskResponse(
+    Long id,
     String name,
     Status status,
     Priority priority
@@ -12,6 +13,7 @@ public record TaskResponse(
 {
     public static TaskResponse fromEntity(Task task) {
         return new TaskResponse(
+                task.getId(),
                 task.getName(),
                 task.getStatus(),
                 task.getPriority()

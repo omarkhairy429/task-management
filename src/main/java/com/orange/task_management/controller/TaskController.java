@@ -4,6 +4,7 @@ import com.orange.task_management.dto.TaskResponse;
 import com.orange.task_management.enums.Priority;
 import com.orange.task_management.enums.Status;
 import com.orange.task_management.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class TaskController {
     }
 
     @PostMapping("/api/v1/tasks")
-    public TaskResponse createTask(@RequestBody TaskRequest request, Authentication auth) {
+    public TaskResponse createTask(@Valid @RequestBody  TaskRequest request, Authentication auth) {
         return taskService.createTask(request, auth);
     }
 

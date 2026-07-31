@@ -3,8 +3,6 @@ package com.orange.task_management.model;
 import com.orange.task_management.enums.Priority;
 import com.orange.task_management.enums.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,8 +21,6 @@ public class Task {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
     @Column(name = "name", nullable = false)
     private String name;
 
