@@ -1,11 +1,9 @@
 package com.orange.task_management.controller;
-
+import com.orange.task_management.dto.TaskRequest;
+import com.orange.task_management.dto.TaskResponse;
 import com.orange.task_management.enums.Priority;
 import com.orange.task_management.enums.Status;
-import com.orange.task_management.model.Task;
-import com.orange.task_management.model.User;
-import com.orange.task_management.repository.TaskRepository;
-import com.orange.task_management.repository.UserRepository;
+import com.orange.task_management.service.TaskService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,66 +11,35 @@ import java.util.List;
 
 @RestController
 public class TaskController {
-    private final TaskRepository taskRepository;
-    private final UserRepository userRepository;
+    private final TaskService taskService;
 
-    public TaskController(TaskRepository taskRepository, UserRepository userRepository) {
-        this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping("/api/v1/tasks")
-    public List<Task> getAllTasks
+    public List<TaskResponse> getAllTasks
             (Authentication auth,
              @RequestParam(required = false) Priority priority,
              @RequestParam(required = false) Status status)
-
     {
-        System.out.println(auth.getName());
-        if (priority != null && status != null) {
-            return taskRepository.findByUserUsernameAndPriorityAndStatus(auth.getName(), priority, status);
-        }
-        else if (priority != null) {
-            return taskRepository.findByUserUsernameAndPriority(auth.getName(),priority);
-        }
-        else if (status != null) {
-            return taskRepository.findByUserUsernameAndStatus(auth.getName(), status);
-        }
-        else {
-            return taskRepository.findByUserUsername(auth.getName());
-        }
+        return taskService.getAllTasks(auth, priority, status);
     }
 
     @PostMapping("/api/v1/tasks")
-    public Task createTask(@RequestBody Task task, Authentication auth) {
-        User currentUser = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new RuntimeException("Problem finding current user"));
-        task.setUser(currentUser);
-        taskRepository.save(task);
-        return task;
+    public TaskResponse createTask(@RequestBody TaskRequest request, Authentication auth) {
+        return taskService.createTask(request, auth);
     }
+
 
     @DeleteMapping("/api/v1/tasks/{id}")
     public void deleteTask(Authentication auth, @PathVariable Long id) {
-        System.out.println("Delete Task Controller");
-        Task taskToDelete = taskRepository.findByIdAndUserUsername(id, auth.getName());
-        if (taskToDelete != null) {
-            taskRepository.delete(taskToDelete);
-        }
+       taskService.deleteTask(auth, id);
     }
 
     @PutMapping("/api/v1/tasks/{id}")
-    public Task updateTask(@RequestBody Task task,Authentication auth, @PathVariable Long id) {
-        System.out.println("Update Task Controller");
-        User currentUser = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new RuntimeException("Problem finding current user"));
-
-        Task taskToUpdate = taskRepository.findByIdAndUserUsername(id, auth.getName());
-        task.setUser(currentUser);
-        if (taskToUpdate != null) {
-            taskRepository.save(task);
-        }
-        return task;
+    public TaskResponse updateTask(@RequestBody TaskRequest request,Authentication auth, @PathVariable Long id) {
+        return taskService.updateTask(request, auth, id);
     }
 
 

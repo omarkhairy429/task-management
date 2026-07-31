@@ -3,6 +3,7 @@ package com.orange.task_management.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -11,7 +12,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final String SECRET = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B59";
+    @Value("${jwt.secret}")
+    private String SECRET;
 
     public String generateToken(String username) {
         return Jwts.builder()

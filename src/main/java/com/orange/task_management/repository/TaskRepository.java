@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    public List<Task> findByUserUsername(String username);
-    public Task findByIdAndUserUsername(Long id, String username);
-    public List<Task> findByUserUsernameAndPriorityAndStatus(String username, Priority priority, Status status);
-    public List<Task> findByUserUsernameAndPriority(String username, Priority priority);
-    public List<Task> findByUserUsernameAndStatus(String username, Status status);
+    List<Task> findByUserUsername(String username);
+    Task findByIdAndUserUsername(Long id, String username);
+    List<Task> findByUserUsernameAndPriorityAndStatus(String username, Priority priority, Status status);
+    List<Task> findByUserUsernameAndPriority(String username, Priority priority);
+    List<Task> findByUserUsernameAndStatus(String username, Status status);
 }
