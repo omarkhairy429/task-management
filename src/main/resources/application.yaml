@@ -11,9 +11,9 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/task-management
-    username: postgres
-    password: omarqwer1
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/task-management}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:omarqwer1}
     driverClassName: org.postgresql.Driver
 
 jwt:
