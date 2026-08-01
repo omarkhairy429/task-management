@@ -1,0 +1,42 @@
+services:
+
+  postgres:
+    image: postgres:18
+    container_name: task-postgres
+
+    environment:
+      POSTGRES_DB: task-management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: omarqwer1
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+  backend:
+    build:
+      context: .
+
+    container_name: task-backend
+
+    depends_on:
+      - postgres
+
+    environment:
+
+      DB_URL: jdbc:postgresql://postgres:5432/task-management
+      DB_USERNAME: postgres
+      DB_PASSWORD: omarqwer1
+
+      JWT_SECRET: ${JWT_SECRET}
+
+    ports:
+      - "8080:8080"
+
+
+volumes:
+
+  postgres-data:
