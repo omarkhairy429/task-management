@@ -2,7 +2,6 @@ package com.orange.task_management.controller;
 
 import com.orange.task_management.dto.UserLogin;
 import com.orange.task_management.dto.UserRequest;
-import com.orange.task_management.model.User;
 import com.orange.task_management.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
