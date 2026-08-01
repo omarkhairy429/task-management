@@ -34,6 +34,18 @@ export class TasksComponent implements OnInit {
     this.loadTasks();
   }
 
+  private extractErrorMessage(err: any, fallback: string): string {
+    if (typeof err.error === 'string') {
+      try {
+        const parsed = JSON.parse(err.error);
+        return parsed.error || err.error;
+      } catch {
+        return err.error;
+      }
+    }
+    return err?.error?.error || fallback;
+  }
+
   loadTasks() {
     this.loading.set(true);
     this.error.set(null);
@@ -44,8 +56,8 @@ export class TasksComponent implements OnInit {
           this.tasks.set(tasks);
           this.loading.set(false);
         },
-        error: () => {
-          this.error.set('Failed to load tasks.');
+        error: (err) => {
+          this.error.set(this.extractErrorMessage(err, 'Failed to load tasks.'));
           this.loading.set(false);
         },
       });
@@ -53,32 +65,39 @@ export class TasksComponent implements OnInit {
 
   createTask() {
     if (!this.newTaskName.trim()) return;
+    this.error.set(null);
+
     const task: TaskRequest = {
       name: this.newTaskName,
       status: this.newTaskStatus,
       priority: this.newTaskPriority,
     };
+
     this.taskService.createTask(task).subscribe({
       next: () => {
         this.newTaskName = '';
         this.loadTasks();
       },
-      error: () => this.error.set('Failed to create task.'),
+      error: (err) => {
+        this.error.set(this.extractErrorMessage(err, 'Failed to create task.'));
+      },
     });
   }
 
   updateStatus(task: Task, newStatus: string) {
+    this.error.set(null);
     const updated: TaskRequest = { name: task.name, status: newStatus, priority: task.priority };
     this.taskService.updateTask(task.id, updated).subscribe({
       next: () => this.loadTasks(),
-      error: () => this.error.set('Failed to update task.'),
+      error: (err) => this.error.set(this.extractErrorMessage(err, 'Failed to update task.')),
     });
   }
 
   deleteTask(id: number) {
+    this.error.set(null);
     this.taskService.deleteTask(id).subscribe({
       next: () => this.loadTasks(),
-      error: () => this.error.set('Failed to delete task.'),
+      error: (err) => this.error.set(this.extractErrorMessage(err, 'Failed to delete task.')),
     });
   }
 }

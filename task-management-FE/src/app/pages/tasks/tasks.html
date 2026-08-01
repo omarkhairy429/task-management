@@ -4,6 +4,10 @@
     <button class="logout-btn" (click)="auth.logout()">Log out</button>
   </div>
 
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
   <div class="card filters-card">
     <h3>Filters</h3>
 
@@ -54,8 +58,6 @@
 
   @if (loading()) {
     <p class="info">Loading...</p>
-  } @else if (error()) {
-    <p class="error">{{ error() }}</p>
   } @else {
     <div class="task-list">
       @for (task of tasks(); track task.id) {
