@@ -1,0 +1,175 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f8fc;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 40px;
+}
+
+.tasks-page {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: #1565c0;
+  margin: 0;
+  font-size: 34px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+h3 {
+  margin-top: 0;
+  color: #1565c0;
+}
+
+.filter-row,
+.create-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+select {
+  padding: 11px 14px;
+  border: 2px solid #dbeafe;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.25s;
+}
+
+input {
+  flex: 1;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.15);
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: linear-gradient(90deg, #1565c0, #42a5f5);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  background: #ef4444;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 15px;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.task-info h4 {
+  margin: 0 0 8px;
+  color: #1f2937;
+}
+
+.priority {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #ef4444;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.error {
+  color: #dc2626;
+  text-align: center;
+  font-weight: 600;
+}
+
+.info,
+.empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 17px;
+}
+
+@media (max-width: 768px) {
+  .top-bar,
+  .task-card,
+  .create-row,
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-actions {
+    justify-content: space-between;
+  }
+
+  .logout-btn {
+    width: 100%;
+  }
+}

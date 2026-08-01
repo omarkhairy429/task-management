@@ -33,3 +33,7 @@ build/
 .vscode/
 
 .env
+/task-management-FE/node_modules/
+/task-management-FE/dist/
+/task-management-FE/.angular/
+

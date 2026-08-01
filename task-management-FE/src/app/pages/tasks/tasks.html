@@ -1,0 +1,88 @@
+<div class="tasks-page">
+  <div class="top-bar">
+    <h2>My Tasks</h2>
+    <button class="logout-btn" (click)="auth.logout()">Log out</button>
+  </div>
+
+  <div class="card filters-card">
+    <h3>Filters</h3>
+
+    <div class="filter-row">
+      <div class="form-group">
+        <label>Status</label>
+        <select [(ngModel)]="filterStatus" (change)="loadTasks()">
+          <option value="">All</option>
+          @for (s of statusOptions; track s) {
+            <option [value]="s">{{ s }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Priority</label>
+        <select [(ngModel)]="filterPriority" (change)="loadTasks()">
+          <option value="">All</option>
+          @for (p of priorityOptions; track p) {
+            <option [value]="p">{{ p }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card create-card">
+    <h3>Add Task</h3>
+
+    <div class="create-row">
+      <input [(ngModel)]="newTaskName" placeholder="Task name" />
+
+      <select [(ngModel)]="newTaskStatus">
+        @for (s of statusOptions; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+
+      <select [(ngModel)]="newTaskPriority">
+        @for (p of priorityOptions; track p) {
+          <option [value]="p">{{ p }}</option>
+        }
+      </select>
+
+      <button (click)="createTask()">Add Task</button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="info">Loading...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else {
+    <div class="task-list">
+      @for (task of tasks(); track task.id) {
+        <div class="task-card">
+          <div class="task-info">
+            <h4>{{ task.name }}</h4>
+
+            <span class="priority">
+              {{ task.priority }}
+            </span>
+          </div>
+
+          <div class="task-actions">
+            <select [ngModel]="task.status" (ngModelChange)="updateStatus(task, $event)">
+              @for (s of statusOptions; track s) {
+                <option [value]="s">{{ s }}</option>
+              }
+            </select>
+
+            <button class="delete-btn" (click)="deleteTask(task.id)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (tasks().length === 0) {
+      <p class="empty">No tasks match these filters.</p>
+    }
+  }
+</div>
