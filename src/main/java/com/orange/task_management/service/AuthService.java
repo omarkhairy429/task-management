@@ -35,6 +35,10 @@ public class AuthService {
 
     public String register(UserRequest registerUser) {
 
+        if (userRepository.existsByUsername(registerUser.username())) {
+            throw new RuntimeException("Username already exists");
+        }
+
         User user = User.builder()
                 .username(registerUser.username())
                 .email(registerUser.email())
